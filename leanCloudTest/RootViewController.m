@@ -97,6 +97,7 @@
 }
 
 - (IBAction)lognIn:(id)sender{
+    //[self performSegueWithIdentifier:@"goToContact" sender:self];
 
 
     [AVUser logInWithUsernameInBackground:self.cell1.zhanghaoTextFile.text
@@ -127,7 +128,10 @@
      [self performSegueWithIdentifier:@"goToSignUp" sender:self];
 }
 
-
+- (IBAction)goToTestViewContrller:(id)sender{
+    
+    [self performSegueWithIdentifier:@"goToTestView" sender:self];
+}
 
 
 /*

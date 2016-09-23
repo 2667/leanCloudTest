@@ -98,10 +98,9 @@
     }else{
         NSLog(@"idArray is not nill");
     };
-    NSLog(@"idArray:%@",self.idArray);
+    //NSLog(@"idArray:%@",self.idArray);
     
     //NSLog(@"id路径:%@",[self getFilePathFromDirectoriesInDomains:@"contactID.plist"]);
-    //NSLog(@"contact路径:%@",[self getFilePathFromDirectoriesInDomains:@"contactDetail.plist"]);
 
     
     //加载通讯录
@@ -111,8 +110,9 @@
     }else{
         NSLog(@"contactArray is not nill");
     };
-    NSLog(@"contactArray:%@",self.contactArray);
-    
+    //NSLog(@"contactArray:%@",self.contactArray);
+    NSLog(@"contact路径:%@",[self getFilePathFromDirectoriesInDomains:@"contactDetail.plist"]);
+
     
 }
 
@@ -148,36 +148,7 @@
     
     self.cell.nameLabel.text = contact.contactName;
     self.cell.telephoneLabel.text = contact.contactTel;
-/*
-    //id
-    IdModel *idModel = self.idArray[indexPath.row];
-    //联络人资料
-    contactModel *contactModel = self.contactArray[indexPath.row];
-    
-    AVQuery *query = [AVQuery queryWithClassName:@"TestObject"];
-    [query getObjectInBackgroundWithId:idModel.idNumber block:^(AVObject *object, NSError *error) {
-        
-        self.cell.nameLabel.text = [object objectForKey:@"name"];
-        
-        self.cell.telephoneLabel.text = [object objectForKey:@"telephone"];
-        
-        //int priority = [[object objectForKey:@"priority"] intValue];
-        //NSString *name = [object objectForKey:@"name"];
-        //NSString *country = object[@"country"];
-        
-        // 获取三个特殊属性
-        //NSString *objectId = object.objectId;
-        //NSDate *updatedAt = object.updatedAt;
-        //NSDate *createdAt = object.createdAt;
-        
-        NSLog(@"infomation:%@",object);
-        //NSLog(@"%@",objectId);
-        //NSLog(@"%@",updatedAt);
-        //NSLog(@"%@",createdAt);
- 
-        
-    }];
-*/
+
     
     
     
@@ -316,6 +287,12 @@
      
 
   
+}
+
+
+
+- (IBAction)goToInfoView:(id)sender{
+    [self performSegueWithIdentifier:@"goToInfo" sender:self];
 }
 
 

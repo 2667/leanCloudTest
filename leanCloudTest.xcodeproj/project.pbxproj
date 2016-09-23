@@ -23,6 +23,10 @@
 		BDD572671D8E919200CED504 /* EditTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD572661D8E919200CED504 /* EditTableViewCell.m */; };
 		BDD5726C1D8FEC0700CED504 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDD5726B1D8FEC0700CED504 /* Media.xcassets */; };
 		BDD5726F1D8FEDFF00CED504 /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = BDD5726E1D8FEDFF00CED504 /* image.png */; };
+		BDD573221D95021B00CED504 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD573211D95021B00CED504 /* TestViewController.m */; };
+		BDD5732C1D951B1F00CED504 /* InformationTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD5732B1D951B1F00CED504 /* InformationTableView.m */; };
+		BDD5732F1D951B3000CED504 /* InformationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD5732E1D951B3000CED504 /* InformationCell.m */; };
+		BDD573351D95250800CED504 /* InfoIdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD573341D95250800CED504 /* InfoIdModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +60,14 @@
 		BDD572661D8E919200CED504 /* EditTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTableViewCell.m; sourceTree = "<group>"; };
 		BDD5726B1D8FEC0700CED504 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		BDD5726E1D8FEDFF00CED504 /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image.png; sourceTree = "<group>"; };
+		BDD573201D95021B00CED504 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		BDD573211D95021B00CED504 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		BDD5732A1D951B1F00CED504 /* InformationTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationTableView.h; sourceTree = "<group>"; };
+		BDD5732B1D951B1F00CED504 /* InformationTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationTableView.m; sourceTree = "<group>"; };
+		BDD5732D1D951B3000CED504 /* InformationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationCell.h; sourceTree = "<group>"; };
+		BDD5732E1D951B3000CED504 /* InformationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationCell.m; sourceTree = "<group>"; };
+		BDD573331D95250800CED504 /* InfoIdModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoIdModel.h; sourceTree = "<group>"; };
+		BDD573341D95250800CED504 /* InfoIdModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoIdModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,14 +126,19 @@
 				BDC749C41D828D0B0030809D /* RootViewController.m */,
 				BDC749C91D82A1290030809D /* TableViewCell.h */,
 				BDC749CA1D82A1290030809D /* TableViewCell.m */,
+				BDD573331D95250800CED504 /* InfoIdModel.h */,
+				BDD573341D95250800CED504 /* InfoIdModel.m */,
 				BDD5726D1D8FEDFF00CED504 /* test */,
 				BDD572681D8FCE0300CED504 /* signUp */,
 				BDC749CC1D82AD570030809D /* contact */,
+				BDD573231D9519C000CED504 /* information */,
 				BD73E2121D66D5B6004DA65B /* Main.storyboard */,
 				BDD5726B1D8FEC0700CED504 /* Media.xcassets */,
 				BD73E2171D66D5B6004DA65B /* LaunchScreen.storyboard */,
 				BD73E21A1D66D5B6004DA65B /* Info.plist */,
 				BD73E2091D66D5B6004DA65B /* Supporting Files */,
+				BDD573201D95021B00CED504 /* TestViewController.h */,
+				BDD573211D95021B00CED504 /* TestViewController.m */,
 			);
 			path = leanCloudTest;
 			sourceTree = "<group>";
@@ -176,6 +193,17 @@
 				BDD5726E1D8FEDFF00CED504 /* image.png */,
 			);
 			path = test;
+			sourceTree = "<group>";
+		};
+		BDD573231D9519C000CED504 /* information */ = {
+			isa = PBXGroup;
+			children = (
+				BDD5732A1D951B1F00CED504 /* InformationTableView.h */,
+				BDD5732B1D951B1F00CED504 /* InformationTableView.m */,
+				BDD5732D1D951B3000CED504 /* InformationCell.h */,
+				BDD5732E1D951B3000CED504 /* InformationCell.m */,
+			);
+			name = information;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,8 +332,12 @@
 				BDC749CF1D82AE0E0030809D /* contactTableViewCell.m in Sources */,
 				BDC749CB1D82A1290030809D /* TableViewCell.m in Sources */,
 				BD73E20E1D66D5B6004DA65B /* AppDelegate.m in Sources */,
+				BDD5732F1D951B3000CED504 /* InformationCell.m in Sources */,
 				BDD572671D8E919200CED504 /* EditTableViewCell.m in Sources */,
+				BDD5732C1D951B1F00CED504 /* InformationTableView.m in Sources */,
 				BDC749C81D8295010030809D /* SignUpViewController.m in Sources */,
+				BDD573221D95021B00CED504 /* TestViewController.m in Sources */,
+				BDD573351D95250800CED504 /* InfoIdModel.m in Sources */,
 				BDC749C51D828D0B0030809D /* RootViewController.m in Sources */,
 				BDD5725D1D89414700CED504 /* IdModel.m in Sources */,
 				BDC749D21D82BA380030809D /* contactModel.m in Sources */,
