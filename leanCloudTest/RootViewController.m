@@ -25,6 +25,9 @@
 @property (strong,nonatomic) TableViewCell *cell1;
 @property (strong,nonatomic) TableViewCell *cell2;
 
+@property (nonatomic, strong) NSMutableArray *infoArray;
+
+
 //@property (strong,nonatomic) UITableViewCell *cell2;
 
 
@@ -97,7 +100,7 @@
 }
 
 - (IBAction)lognIn:(id)sender{
-    //[self performSegueWithIdentifier:@"goToContact" sender:self];
+    //[self performSegueWithIdentifier:@"goToMainView" sender:self];
 
 
     [AVUser logInWithUsernameInBackground:self.cell1.zhanghaoTextFile.text
@@ -109,19 +112,53 @@
             //获取对应用户object名称
             delegate.objectName = self.cell1.zhanghaoTextFile.text;
             
-            [self performSegueWithIdentifier:@"goToContact" sender:self];
+            //列出云端的用户信息
+            [self listUserInfo];
             
+            [self performSegueWithIdentifier:@"goToMainView" sender:self];
+ 
 
         } else {
             NSLog(@"无法登录，原因：%@",error);
         }
     }];
-    
+ 
   
-    NSLog(@"账号：%@",self.cell1.zhanghaoTextFile.text);
+    //NSLog(@"账号：%@",self.cell1.zhanghaoTextFile.text);
 
-    NSLog(@"密码：%@",self.cell2.mimaTextFile.text);
+    //NSLog(@"密码：%@",self.cell2.mimaTextFile.text);
 }
+
+- (void)listUserInfo{
+    //获取对应id
+    NSString *path = [self getFilePathFromDirectoriesInDomains:[NSString stringWithFormat:@"%@_InfoID.plist", delegate.objectName]];
+    
+    self.infoArray = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    //NSLog(@"array:%@",self.infoArray);
+    
+    if (self.infoArray == nil) {
+        NSLog(@"error");
+    }else{
+    
+    AVQuery *query = [AVQuery queryWithClassName:@"user_Infomation"];
+    [query getObjectInBackgroundWithId:self.infoArray[0] block:^(AVObject *object, NSError *error) {
+        
+        self.infoArray = [NSMutableArray array];
+        [self.infoArray addObject: [object objectForKey:@"name"]];
+        [self.infoArray addObject: [object objectForKey:@"telephone"]];
+        [self.infoArray addObject: [object objectForKey:@"email"]];
+        [self.infoArray addObject: [object objectForKey:@"address"]];
+       /*
+        NSLog(@"name:%@",[object objectForKey:@"name"]);
+        NSLog(@"telephone:%@",[object objectForKey:@"telephone"]);
+        NSLog(@"email:%@",[object objectForKey:@"email"]);
+        NSLog(@"address:%@",[object objectForKey:@"address"]);
+       */ 
+        
+    }];
+    }
+}
+
 
 - (IBAction)signUp:(id)sender{
     
@@ -133,7 +170,18 @@
     [self performSegueWithIdentifier:@"goToTestView" sender:self];
 }
 
-
+//获取沙盒路径，并与文件名合并为完整的路径
+- (NSString *)getFilePathFromDirectoriesInDomains:(NSString *)fileName {
+    
+    NSArray *paths= NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    
+    NSString *domainsPath = [paths objectAtIndex:0];
+    
+    NSString *fullPath = [domainsPath stringByAppendingPathComponent:fileName];
+    
+    return fullPath;
+    
+}
 /*
 #pragma mark - Navigation
 

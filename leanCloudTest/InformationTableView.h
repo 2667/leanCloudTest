@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "InformationCell.h"
+
+
 @interface InformationTableView : UITableViewController
+
+
 
 @end

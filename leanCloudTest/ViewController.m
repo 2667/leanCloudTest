@@ -16,6 +16,7 @@
 
 #import "AppDelegate.h"
 
+#import "InformationTableView.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>{
     AppDelegate *delegate;
@@ -28,6 +29,9 @@
 
 @property (nonatomic, strong) NSMutableArray *idArray;
 @property (nonatomic, strong) NSMutableArray *contactArray;
+
+@property (nonatomic, strong) NSMutableArray *infoArray;
+
 
 
 
@@ -120,13 +124,12 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
+
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    //return self.idArray.count;
+
     return self.contactArray.count;
 }
 
@@ -292,7 +295,14 @@
 
 
 - (IBAction)goToInfoView:(id)sender{
-    [self performSegueWithIdentifier:@"goToInfo" sender:self];
+    
+  
+        
+        [self performSegueWithIdentifier:@"goToInfo" sender:self];
+
+        
+    
+    
 }
 
 

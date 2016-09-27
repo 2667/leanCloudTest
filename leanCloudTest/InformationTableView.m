@@ -12,7 +12,6 @@
 
 #import <AVOSCloud/AVOSCloud.h>
 
-#import "InfoIdModel.h"
 
 #import "AppDelegate.h"
 
@@ -31,7 +30,7 @@
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *address;
 
-@property (nonatomic, strong) InformationCell *cell;
+@property (nonatomic, strong) InformationCell *infocell;
 
 
 @end
@@ -49,8 +48,16 @@
     
     delegate = [[UIApplication sharedApplication] delegate];
     
+    //[self loadData];
+
+    
+}
+
+
+- (void)viewWillAppear:(BOOL)animated{
     [self loadData];
 
+    [self.tableView reloadData];
     
 }
 
@@ -64,13 +71,18 @@
     // 反归档，调用反归档方法
  
     NSString *path = [self getFilePathFromDirectoriesInDomains:[NSString stringWithFormat:@"%@_InfoID.plist", delegate.objectName]];
-    NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    NSLog(@"%@",array);
+
+    self.infoArray = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    NSLog(@"array:%@",self.infoArray);
     
+    
+    
+  /*
     //获取对应id
     InfoIdModel *infoIdModel = [[InfoIdModel alloc]init];
     infoIdModel = array[0];
     NSLog(@"!!!!___________%@",infoIdModel.InfoIdNumber);
+    
     
     AVQuery *query = [AVQuery queryWithClassName:@"user_Infomation"];
     [query getObjectInBackgroundWithId:infoIdModel.InfoIdNumber block:^(AVObject *object, NSError *error) {
@@ -83,61 +95,74 @@
         
         NSLog(@"infoArray:%@",self.infoArray);
 
-        self.cell.InfoNameFile.text = self.infoArray[0];
-        self.cell.InfotelephoneFile.text = self.infoArray[1];
-        self.cell.InfoEmailFile.text = self.infoArray[2];
-        self.cell.InfoAddressFile.text = self.infoArray[3];
-        [self.tableView reloadData];
+        self.infocell.InfoNameFile.text = self.infoArray[0];
+        self.infocell.InfotelephoneFile.text = self.infoArray[1];
+        self.infocell.InfoEmailFile.text = self.infoArray[2];
+        self.infocell.InfoAddressFile.text = self.infoArray[3];
+        //[self.tableView reloadData];
         
         // 获取三个特殊属性
         //NSString *objectId = object.objectId;
         //NSDate *updatedAt = object.updatedAt;
         //NSDate *createdAt = object.createdAt;
-        
+     
     
         
         
     }];
-
-    
-}
-/*
-- (void)save{
-    // 反归档，调用反归档方法
-    
-    NSString *path = [self getFilePathFromDirectoriesInDomains:[NSString stringWithFormat:@"%@_InfoID.plist", delegate.objectName]];
-    NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    //NSLog(@"%@",array);
-    
-    //获取对应id
-    InfoIdModel *infoIdModel = [[InfoIdModel alloc]init];
-    infoIdModel = array[0];
-    
-    
-    AVObject *updateObject =[AVObject objectWithClassName:delegate.objectName objectId:infoIdModel.InfoIdNumber];
-    // 修改属性
-    [updateObject setObject:self.editCell.EditName.text forKey:@"name"];
-    [updateObject setObject:self.editCell.EditName.text forKey:@"telephone"];
-    
-    
-    
-    // 保存到云端
-    [updateObject saveInBackground];
-    
-    //跟新通讯录并归档
-    contactModel *model = [[contactModel alloc]init];
-    model.contactName = self.editCell.EditName.text;
-    model.contactTel = self.editCell.EditTel.text;
-    
-    [self.contactArray replaceObjectAtIndex:self.arrayRow withObject:model];
-    
-    NSString *path2 = [self getFilePathFromDirectoriesInDomains:[NSString stringWithFormat:@"%@_contactDetail.plist", delegate.objectName]];
-    
-    // 归档，调用归档方法
-    BOOL success2 = [NSKeyedArchiver archiveRootObject:self.contactArray toFile:path2];
-    
-}
 */
+    
+}
+
+- (IBAction)save:(id)sender{
+    
+  
+    
+    
+    
+    AVObject *updateInfo = [AVObject objectWithClassName:@"user_Infomation" objectId:self.infoArray[0]];
+    
+    [updateInfo setObject:self.infocell.InfoNameFile.text forKey:@"name"];
+    [updateInfo setObject:self.infocell.InfotelephoneFile.text forKey:@"telephone"];
+    [updateInfo setObject:self.infocell.InfoEmailFile.text forKey:@"email"];
+    [updateInfo setObject:self.infocell.InfoAddressFile.text forKey:@"address"];
+    
+    
+    [updateInfo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            // 存储成功
+            NSLog(@"update user information succeeded");
+            
+          
+            
+            [self.infoArray replaceObjectAtIndex:1 withObject:self.infocell.InfoNameFile.text];
+            [self.infoArray replaceObjectAtIndex:2 withObject:self.infocell.InfotelephoneFile.text];
+            [self.infoArray replaceObjectAtIndex:3 withObject:self.infocell.InfoEmailFile.text];
+            [self.infoArray replaceObjectAtIndex:4 withObject:self.infocell.InfoAddressFile.text];
+            
+            NSString *path = [self getFilePathFromDirectoriesInDomains:[NSString stringWithFormat:@"%@_InfoID.plist", delegate.objectName]];
+            
+            [NSKeyedArchiver archiveRootObject:self.infoArray toFile:path];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            
+            
+            
+            
+            
+            
+        } else {
+            // 失败的话，请检查网络环境以及 SDK 配置是否正确
+            NSLog(@"error:%@",error);
+        }
+        
+        
+        
+    }];
+
+
+}
+
 
 #pragma mark - Table view data source
 
@@ -154,28 +179,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    InformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InfoCell" forIndexPath:indexPath];
+    //InformationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InfoCell" forIndexPath:indexPath];
     //NSInteger row = indexPath.row;
     
- 
+    self.infocell = [tableView dequeueReusableCellWithIdentifier:@"InfoCell" forIndexPath:indexPath];
 
+    self.infocell.InfoNameFile.text = self.infoArray[1];
+    self.infocell.InfotelephoneFile.text = self.infoArray[2];
+    self.infocell.InfoEmailFile.text = self.infoArray[3];
+    self.infocell.InfoAddressFile.text = self.infoArray[4];
     
-    
-  /*
-    if (row == 0) {
-        cell.InfoLabel.text = @"名称";
-    }
-    else if (row == 1) {
-        cell.InfoLabel.text = @"电话";
-    }
-    else if (row == 2) {
-        cell.InfoLabel.text = @"邮箱";
-    }
-    else if (row == 3) {
-        cell.InfoLabel.text = @"住址";
-    }
-   */
-    return cell;
+    return self.infocell;
 }
 
 

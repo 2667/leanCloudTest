@@ -12,7 +12,8 @@
 
 #import "AppDelegate.h"
 
-#import "InfoIdModel.h"
+#import "DiaryModel.h"
+
 
 
 @interface SignUpViewController (){
@@ -22,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *passWordFile;
 
 @property (nonatomic, strong) NSMutableArray *idArray;
+@property (nonatomic, strong) NSMutableArray *infoArray;
+
 
 
 @end
@@ -43,6 +46,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)submit:(id)sender {
+    
+    [self signUp];
+    //[self initInfomation];
+    //[self createDiaryFile];
+}
+
 - (void)signUp{
     AVUser *newUser = [AVUser user];// 新建 AVUser 对象实例
     newUser.username = self.accountFile.text;// 设置用户名
@@ -53,6 +63,7 @@
         if (succeeded) {
             // 注册成功
             NSLog(@"注册成功");
+            [self initInfomation];
         } else {
             // 失败的原因可能有多种，常见的是用户名已经存在。
             NSLog(@"注册失败");
@@ -67,9 +78,9 @@
     AVObject *infoObject = [AVObject objectWithClassName:@"user_Infomation"];
     
     [infoObject setObject:self.accountFile.text forKey:@"name"];
-    [infoObject setObject:nil forKey:@"telephone"];
-    [infoObject setObject:nil forKey:@"email"];
-    [infoObject setObject:nil forKey:@"address"];
+    [infoObject setObject:@"" forKey:@"telephone"];
+    [infoObject setObject:@"" forKey:@"email"];
+    [infoObject setObject:@"" forKey:@"address"];
 
     
     [infoObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -83,36 +94,32 @@
              */
             NSString *path = [self getFilePathFromDirectoriesInDomains:[NSString stringWithFormat:@"%@_InfoID.plist", self.accountFile.text]];
             //归档
-            if (self.idArray == nil) {
-                self.idArray = [NSMutableArray array];
+            if (self.infoArray == nil) {
+                self.infoArray = [NSMutableArray array];
             }else{
                 NSLog(@"idArray is not nill");
             };
             
-            InfoIdModel *infoIdModel = [[InfoIdModel alloc]init];
-            
-            infoIdModel.InfoIdName = self.accountFile.text;
-            infoIdModel.InfoIdNumber = infoObject.objectId;
-            
-            [self.idArray addObject:infoIdModel];
+           
+            [self.infoArray addObject:infoObject.objectId];
+            [self.infoArray addObject:self.accountFile.text];
+            [self.infoArray addObject:@""];
+            [self.infoArray addObject:@""];
+            [self.infoArray addObject:@""];
+
             
             // 归档，调用归档方法
-            BOOL success = [NSKeyedArchiver archiveRootObject:self.idArray toFile:path];
+            BOOL success = [NSKeyedArchiver archiveRootObject:self.infoArray toFile:path];
             //NSLog(@"%d",success);
             if (success == 1) {
                 NSLog(@"success");
-                NSLog(@"path:%@",[self getFilePathFromDirectoriesInDomains:[NSString stringWithFormat:@"%@_InfoID.plist", self.accountFile.text]]);
+                //NSLog(@"path:%@",[self getFilePathFromDirectoriesInDomains:[NSString stringWithFormat:@"%@_InfoID.plist", self.accountFile.text]]);
             }else{
                 NSLog(@"fail");
             }
             
       
-            
-            
-            
-            
-            
-            
+
             
         } else {
             // 失败的话，请检查网络环境以及 SDK 配置是否正确
@@ -124,11 +131,48 @@
     }];
 }
 
-- (IBAction)submit:(id)sender {
+//创建日记本
+- (void)createDiaryFile{
+    /*
+    DiaryModel *model =[[DiaryModel alloc]init];
+    model.diaryName = self.editDiaryName.text;
+    model.diary = self.editDiary.text;
+    */
     
-    [self signUp];
-    [self initInfomation];
+    NSMutableArray *createArray = [NSMutableArray array];
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:createArray];
+    //NSLog(@"data:%@",data);
+    
+    
+    AVFile *file = [AVFile fileWithName:[NSString stringWithFormat:@"%@_diary.plist", self.accountFile.text] data:data];
+    
+    [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        NSLog(@"url:%@",file.url);//返回一个唯一的 Url 地址
+        
+        //保存日记本url
+        NSMutableArray *array = [NSMutableArray array];
+        [array addObject:file.url];
+        
+        NSString *path = [self getFilePathFromDirectoriesInDomains:[NSString stringWithFormat:@"%@_diaryUrl.plist", delegate.objectName]];
+        
+        
+        
+        // 归档，调用归档方法
+        BOOL success = [NSKeyedArchiver archiveRootObject:array toFile:path];
+        //NSLog(@"%d",success);
+        if (success == 1) {
+            NSLog(@"success");
+        }else{
+            NSLog(@"fail");
+        }
+        
+        
+    }];
 }
+
+
+
 
 //获取沙盒路径，并与文件名合并为完整的路径
 - (NSString *)getFilePathFromDirectoriesInDomains:(NSString *)fileName {
