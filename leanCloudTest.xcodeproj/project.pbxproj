@@ -13,6 +13,7 @@
 		BD73E2111D66D5B6004DA65B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BD73E2101D66D5B6004DA65B /* ViewController.m */; };
 		BD73E2141D66D5B6004DA65B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD73E2121D66D5B6004DA65B /* Main.storyboard */; };
 		BD73E2191D66D5B6004DA65B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD73E2171D66D5B6004DA65B /* LaunchScreen.storyboard */; };
+		BDC197121D9ED13F00C66053 /* testTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDC197111D9ED13F00C66053 /* testTableViewController.m */; };
 		BDC749C51D828D0B0030809D /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDC749C41D828D0B0030809D /* RootViewController.m */; };
 		BDC749C81D8295010030809D /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDC749C71D8295010030809D /* SignUpViewController.m */; };
 		BDC749CB1D82A1290030809D /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BDC749CA1D82A1290030809D /* TableViewCell.m */; };
@@ -46,6 +47,8 @@
 		BD73E2131D66D5B6004DA65B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BD73E2181D66D5B6004DA65B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BD73E21A1D66D5B6004DA65B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDC197101D9ED13F00C66053 /* testTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testTableViewController.h; sourceTree = "<group>"; };
+		BDC197111D9ED13F00C66053 /* testTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = testTableViewController.m; sourceTree = "<group>"; };
 		BDC749C31D828D0B0030809D /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		BDC749C41D828D0B0030809D /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		BDC749C61D8295010030809D /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
@@ -135,6 +138,8 @@
 			children = (
 				BD73E20C1D66D5B6004DA65B /* AppDelegate.h */,
 				BD73E20D1D66D5B6004DA65B /* AppDelegate.m */,
+				BDC197101D9ED13F00C66053 /* testTableViewController.h */,
+				BDC197111D9ED13F00C66053 /* testTableViewController.m */,
 				BDD573361D99040C00CED504 /* rootView */,
 				BDD572681D8FCE0300CED504 /* signUp */,
 				BDD573371D99043000CED504 /* mainView */,
@@ -378,6 +383,7 @@
 				BDC749CF1D82AE0E0030809D /* contactTableViewCell.m in Sources */,
 				BDC749CB1D82A1290030809D /* TableViewCell.m in Sources */,
 				BD73E20E1D66D5B6004DA65B /* AppDelegate.m in Sources */,
+				BDC197121D9ED13F00C66053 /* testTableViewController.m in Sources */,
 				BDD5734B1D99197100CED504 /* DiaryModel.m in Sources */,
 				BDD5732F1D951B3000CED504 /* InformationCell.m in Sources */,
 				BDD5733A1D99047200CED504 /* MainCollectionView.m in Sources */,
